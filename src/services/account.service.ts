@@ -1,41 +1,49 @@
+import { singleton } from 'tsyringe';
 import { Account } from '../models/account';
 
+@singleton()
 export class AccountService {
 	private accounts: Account[] = [];
-	constructor() {}
 
-	create(id: number): Account {
+	create(id: string): Account {
 		let newAccount = {
 			id: id,
 			balance: 0,
 		};
-		return this.accounts[this.accounts.push(newAccount)];
+		this.accounts.push(newAccount);
+		return newAccount;
 	}
 
-	read(id: number): Account | false {
-		return this.accounts.find((i) => i.id === id) || false;
+	public read(id: string): Account | null {
+		let data = this.accounts.find((i) => i.id == id);
+		return data || null;
 	}
 
-	reset() {
+	update(account: Account, balance: number): Account {
+		return (this.accounts[this.accounts.indexOf(account)] = {
+			...account,
+			balance,
+		});
+	}
+
+	public reset() {
 		this.accounts = [];
 	}
 
-	deposit(id: number, value: number) {
-		let account = this.accounts[id];
-		if (account) {
-			this.accounts[id].balance += value;
-			return this.accounts[id];
-		} else {
-			this.accounts[this.create(id).id].balance += value;
-			return this.accounts[id];
+	public deposit(id: string, value: number): Account {
+		let account = this.read(id);
+		if (!account) {
+			let newAccount = this.create(id);
+			account = newAccount;
 		}
+		return this.update(account, account.balance + value);
 	}
 
-	withdraw(id: number, value: number) {
-		let account = this.accounts[id];
-		if (account) {
-			this.accounts[id].balance -= value;
-			return this.accounts[id];
+	public withdraw(id: string, value: number): Account | false {
+		let account = this.read(id);
+		if (!account) {
+			return false;
 		}
+		return this.update(account, account.balance + value);
 	}
 }
