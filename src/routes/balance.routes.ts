@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { container } from 'tsyringe';
 import { BalanceController } from '../controllers/balance.controller';
-import { AccountService } from '../services/account.service';
 
 export class BalanceRoute {
 	public route: Router;

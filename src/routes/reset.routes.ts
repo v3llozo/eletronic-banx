@@ -1,9 +1,13 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Router } from 'express';
+import { container } from 'tsyringe';
+import { ResetController } from '../controllers/reset.controller';
 
 export class ResetRoute {
-	route: Router = Router().post('/reset', this.reset);
-
-	private reset(req: Request, res: Response, next: NextFunction) {
-		return res.send({ status: 'ok' }).status(201);
+	public route: Router;
+	constructor() {
+		const reset = container.resolve(ResetController);
+		this.route = Router().post('/reset', (req, res, next) =>
+			reset.post(req, res, next)
+		);
 	}
 }

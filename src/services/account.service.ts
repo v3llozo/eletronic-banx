@@ -28,6 +28,7 @@ export class AccountService {
 
 	public reset() {
 		this.accounts = [];
+		return 'OK';
 	}
 
 	public deposit(id: string, value: number): Account {

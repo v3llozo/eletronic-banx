@@ -1,7 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
+import { injectable } from 'tsyringe';
+import { AccountService } from '../services/account.service';
 
+@injectable()
 export class ResetController {
-	post(req: Request, res: Response) {
-		return res.send().status(200);
+	constructor(private service: AccountService) {}
+	post(req: Request, res: Response, next: NextFunction) {
+		return res.send(this.service.reset()).status(200);
 	}
 }
