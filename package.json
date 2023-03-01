@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "app.ts",
 	"scripts": {
-		"start": "nodemon src/app.ts",
+		"start": "ts-node build/app.js",
+		"start:dev": "nodemon src/app.ts",
 		"build": "tsc"
 	},
 	"author": "v3llozo",
