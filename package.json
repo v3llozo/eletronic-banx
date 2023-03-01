@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "app.ts",
 	"scripts": {
-		"start": "ts-node build/app.js",
+		"start": "npm ci && npm run build && npm run start:dist",
+		"start:dist": "ts-node build/app.js",
 		"start:dev": "nodemon src/app.ts",
 		"build": "tsc"
 	},
@@ -25,4 +26,3 @@
 		"tsyringe": "^4.7.0"
 	}
 }
-
