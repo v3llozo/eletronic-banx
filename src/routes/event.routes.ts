@@ -1,9 +1,13 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Router } from 'express';
+import { container } from 'tsyringe';
 import { EventController } from '../controllers/event.controller';
 
 export class EventRoute {
-	private event = new EventController();
-	route: Router = Router()
-		.post('/event', this.event.post)
-		.get('/event', this.event.get);
+	public route: Router;
+	constructor() {
+		const event = container.resolve(EventController);
+		this.route = Router().post('/event', (req, res, next) =>
+			event.post(req, res, next)
+		);
+	}
 }

@@ -1,11 +1,11 @@
 export interface Event {
 	type: 'deposit' | 'transfer' | 'withdraw';
 	origin: {
-		id: number;
+		id: string;
 		balance: number;
 	};
 	destination: {
-		id: number;
+		id: string;
 		balance: number;
 	};
 }
