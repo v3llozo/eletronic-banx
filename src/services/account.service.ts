@@ -47,4 +47,14 @@ export class AccountService {
 		}
 		return this.update(account, account.balance + value);
 	}
+
+	public transfer(originId: string, destinationId: string, amount: number) {
+		let origin = this.read(originId);
+		let destination = this.read(destinationId);
+		if (!origin || !destination) {
+			return 0;
+		}
+
+		this.withdraw(origin.id, amount);
+	}
 }

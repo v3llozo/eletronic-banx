@@ -1,5 +1,6 @@
-import { NextFunction, Request, RequestHandler, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { injectable } from 'tsyringe';
+import { EventType } from '../models/event';
 import { AccountService } from '../services/account.service';
 @injectable()
 export class EventController {
@@ -7,18 +8,19 @@ export class EventController {
 	async post(req: Request, res: Response, next: NextFunction) {
 		let request = req.body;
 		let response = { data: {}, status: 201 };
-		if (request.type == 'deposit') {
+		if (request.type == EventType.DEPOSIT) {
 			response.data = {
 				destination: this.service.deposit(
 					req.body.destination,
 					req.body.amount
 				),
 			};
-		} else if (request.type == 'withdraw') {
+		} else if (request.type == EventType.DEPOSIT) {
 			response.data = {
 				origin: this.service.withdraw(req.body.origin, req.body.amount),
 			};
 		} else {
+			response.data = {};
 		}
 
 		res.status(response.status).send(response.data);

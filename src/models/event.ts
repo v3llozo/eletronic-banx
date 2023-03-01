@@ -1,5 +1,5 @@
 export interface Event {
-	type: 'deposit' | 'transfer' | 'withdraw';
+	type: EventType;
 	origin: {
 		id: string;
 		balance: number;
@@ -8,4 +8,10 @@ export interface Event {
 		id: string;
 		balance: number;
 	};
+}
+
+export enum EventType {
+	DEPOSIT = 'deposit',
+	TRANSFER = 'transfer',
+	WITHDRAW = 'withdraw',
 }
