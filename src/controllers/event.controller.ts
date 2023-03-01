@@ -15,12 +15,16 @@ export class EventController {
 					req.body.amount
 				),
 			};
-		} else if (request.type == EventType.DEPOSIT) {
+		} else if (request.type == EventType.WITHDRAW) {
 			response.data = {
 				origin: this.service.withdraw(req.body.origin, req.body.amount),
 			};
 		} else {
-			response.data = {};
+			response.data = this.service.transfer(
+				request.origin,
+				request.destination,
+				request.amount
+			);
 		}
 
 		res.status(response.status).send(response.data);

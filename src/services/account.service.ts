@@ -45,16 +45,17 @@ export class AccountService {
 		if (!account) {
 			return false;
 		}
-		return this.update(account, account.balance + value);
+		return this.update(account, account.balance - value);
 	}
 
 	public transfer(originId: string, destinationId: string, amount: number) {
 		let origin = this.read(originId);
-		let destination = this.read(destinationId);
-		if (!origin || !destination) {
+		if (!origin) {
 			return 0;
 		}
-
-		this.withdraw(origin.id, amount);
+		return {
+			origin: this.withdraw(origin.id, amount),
+			destination: this.deposit(destinationId, amount),
+		};
 	}
 }
